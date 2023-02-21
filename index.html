@@ -1,14 +1,95 @@
 <!DOCTYPE html>
-<html> 
+<html>
 
 <head>
-    <meta charset=utf-8/>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="js/d3.v6.1.1/d3.min.js"></script>
+    <title>hw - 05</title>
 </head>
 
-
 <body>
+    <!-- header 1 -->
+    <h1 class="centered">hw-05: Interactive Graph with D3</h1>
 
+    <!-- columns -->
+    <div class="row">
+        <!-- left column -->
+        <div class="left">
+            <div id="vis1"></div>
+        </div>
 
+        <!-- right column -->
+        <div class="right">
+            <div class="coordinate-display">
+                Coordinates:
+                <span id="coordinates" />
+            </div>
+            <div>
+                <h2>Add a Coordinate</h2>
+                <div class="coordinate-selector">
+                    (<select id="x-coordinate">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                    </select>,
+                    <select id="y-coordinate">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                    </select>)
+                </div>
+            </div>
+            <button id="add-point" onClick="addPoint()">Add point</button>
+        </div>
+    </div>
+    <h2 class="centered">Acknowledgements</h2>
+    <ul>
+        <li><a href="https://www.w3schools.com/tags/att_script_src.asp">Adding JS to HTML</a></li>
+        <li>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById">Get Element by ID</a>
+        </li>
+        <li>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/circle">SVG Circle</a>
+        </li>
+        <li><a href="https://www.w3schools.com/jsref/event_onclick.asp">Using onClick Event</a></li>
+        <li>
+            <a
+                href="https://stackoverflow.com/questions/19998711/how-to-pass-this-element-to-javascript-onclick-function-and-add-a-class-to-that">Passing
+                an element to an onClick function</a>
+        </li>
+        <li>
+            <a
+                href="https://stackoverflow.com/questions/18330344/how-to-add-border-outline-stroke-to-svg-elements-in-css">Adding
+                border outline to SVG</a>
+        </li>
+        <li>
+            <a
+                href="https://stackoverflow.com/questions/9515766/how-to-add-class-to-element-only-if-it-already-does-not-have-it">Adding
+                class if it doesn't have it</a>
+        </li>
+        <li>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/API/SVGCircleElement/cx">SVG Circle Element Getting
+                position in JS</a>
+        </li>
+        <li>
+            <a href="https://stackoverflow.com/questions/1085801/get-selected-value-in-dropdown-list-using-javascript">Getting
+                Dropdown Value</a>
+        </li>
+    </ul>
+    <script src="main.js"></script>
 </body>
 
 </html>

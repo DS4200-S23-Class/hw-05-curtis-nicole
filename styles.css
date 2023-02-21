@@ -1,0 +1,50 @@
+body {
+    font: arial
+}
+
+.centered {
+    text-align: center;
+}
+
+.row {
+    display: flex;
+}
+
+.left {
+    flex: 40%;
+}
+
+.right {
+    flex: 75%;
+
+}
+
+.frame {
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+
+.point {
+    fill: purple;
+}
+
+.point:hover {
+    fill: red;
+}
+
+.border {
+    stroke: green;
+    stroke-width: 10px;
+}
+
+.coordinate-display {
+    border: black 2px solid;
+    padding: 12px;
+    margin-bottom: 2rem;
+}
+
+.coordinate-selector {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+}
