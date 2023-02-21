@@ -111,7 +111,57 @@ function addPoint(X_SCALE, Y_SCALE) {
     frame.appendChild(circleElement);
 }
 
+async function buildBarChart() {
+    const dataBar = await d3.csv("data/bar-data.csv")
+    console.log(dataBar)
+
+    const VIS_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
+    const VIS_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right;
+
+    const FRAME = d3.select("#vis2")
+        .append("svg")
+        .attr("id", "frame")
+        .attr("height", FRAME_HEIGHT)
+        .attr("width", FRAME_WIDTH)
+        .attr("class", "frame");
+
+
+    const X_SCALE = d3.scaleBand().padding(0.2)
+        .domain(dataBar.map(d => d.category)) // add some padding  
+        .range([0, VIS_WIDTH])
+
+    const MAX_Y = d3.max(dataBar, (d) => Number(d.amount));
+    console.log(MAX_Y)
+
+    const Y_SCALE = d3.scaleLinear()
+        // linear data 
+        .domain([0, (MAX_Y)]) // add some padding  
+        .range([VIS_HEIGHT, 0]);
+
+    FRAME.selectAll(".bar")
+        .data(dataBar)
+        .enter()
+        .append("rect")
+        .attr("class", "bar")
+        .attr('id', (d) => `${d.category}: ${d.amount}`)
+        .attr("x", (d) => (X_SCALE(d.category) + MARGINS.left))
+        .attr("y", (d) => (Y_SCALE(d.amount) + MARGINS.top))
+        .attr("width", X_SCALE.bandwidth())
+        .attr("height", (d) => VIS_HEIGHT - Y_SCALE(d.amount));
+
+    FRAME.append("g")
+        .attr("transform", "translate(" + MARGINS.left +
+            "," + (VIS_HEIGHT + MARGINS.top) + ")")
+        .call(d3.axisBottom(X_SCALE));
+
+    FRAME.append("g").attr("transform", "translate(" + MARGINS.top +
+        "," + MARGINS.left + ")")
+        .call(d3.axisLeft(Y_SCALE).ticks(4));
+
+}
+
 buildScatterPlot()
+buildBarChart()
 
 
 

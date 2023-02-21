@@ -20,13 +20,12 @@ body {
 }
 
 .frame {
-    border-left: 2px solid black;
-    border-bottom: 2px solid black;
+    background: rgb(244, 244, 244);
 }
 
 
 .point {
-    fill: rgb(255, 11, 198);
+    fill: rgb(255, 150, 230);
 }
 
 .point:hover {
@@ -48,3 +47,13 @@ body {
     padding-top: 1rem;
     padding-bottom: 2rem;
 }
+
+.bar {
+    fill: rgb(112, 166, 117);
+}
+
+.bar:hover {
+    fill: rgb(11, 166, 255);
+}
+
+.tooltip {}
