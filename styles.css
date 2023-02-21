@@ -26,11 +26,11 @@ body {
 
 
 .point {
-    fill: purple;
+    fill: rgb(255, 11, 198);
 }
 
 .point:hover {
-    fill: red;
+    fill: rgb(98, 147, 240);
 }
 
 .border {

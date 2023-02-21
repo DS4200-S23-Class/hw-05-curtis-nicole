@@ -4,13 +4,13 @@ const MARGINS = { left: 50, right: 50, top: 50, bottom: 50 };
 
 async function buildScatterPlot() {
     const data = await d3.csv("data/scatter-data.csv")
-    console.log(data)
 
     const VIS_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
     const VIS_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right;
 
     const FRAME = d3.select("#vis1")
         .append("svg")
+        .attr("id", "frame")
         .attr("height", FRAME_HEIGHT)
         .attr("width", FRAME_WIDTH)
         .attr("class", "frame");
@@ -18,35 +18,31 @@ async function buildScatterPlot() {
 
     // find max X
     const MAX_X = d3.max(data, (d) => Number(d.x));
-    console.log("Max x: " + MAX_X);
 
     const X_SCALE = d3.scaleLinear() // linear scale because we have 
         // linear data 
         .domain([0, (MAX_X + 1)]) // add some padding  
         .range([0, VIS_WIDTH]);
 
-    console.log("Input: 4, X_SCALE output: " + X_SCALE(4));
 
     const MAX_Y = d3.max(data, (d) => Number(d.y));
-    console.log("Max y: " + MAX_Y);
 
     const Y_SCALE = d3.scaleLinear() // linear scale because we have 
         // linear data 
         .domain([0, (MAX_Y + 1)]) // add some padding  
         .range([VIS_HEIGHT, 0]);
 
-    console.log("Input: 4, Y_SCALE output: " + Y_SCALE(4));
 
     FRAME.selectAll("points")
         .data(data)
         .enter()
         .append("circle")
+        .attr('id', (d) => `(${d.x}, ${d.y})`)
         .attr("cx", (d) => (X_SCALE(d.x) + MARGINS.left))
         .attr("cy", (d) => (Y_SCALE(d.y) + MARGINS.top))
         .attr("r", 20)
         .attr("class", "point")
         .attr('onclick', 'onPointClick(this)');
-
 
     FRAME.append("g") // g is a "placeholder" svg
         .attr("transform", "translate(" + MARGINS.left +
@@ -59,6 +55,8 @@ async function buildScatterPlot() {
             "," + MARGINS.left + ")")
         .call(d3.axisLeft(Y_SCALE).ticks(4))
         .attr("font-size", '20px');
+
+    document.getElementById("add-point").addEventListener("click", () => addPoint(X_SCALE, Y_SCALE));
 }
 
 // translate SVG coordinates into grid coordinates
@@ -76,8 +74,7 @@ function getGridCoordinates(circleElement, height, scalar = 1) {
 function onPointClick(circleElement) {
     const coordinateDisplay = document.getElementById('coordinates');
 
-    const gridCoordinates = getGridCoordinates(circleElement, FRAME_HEIGHT, 100);
-    coordinateDisplay.innerHTML = `(${gridCoordinates.xCoordinate}, ${gridCoordinates.yCoordinate})`;
+    coordinateDisplay.innerHTML = circleElement.id
 
     // if border already exists remove it
     if (circleElement.classList.contains('border')) {
@@ -86,6 +83,32 @@ function onPointClick(circleElement) {
     }
 
     circleElement.classList.add('border');
+}
+
+
+// add the point to the SVG visualization based on user selected input
+function addPoint(X_SCALE, Y_SCALE) {
+
+    // retrieve the user's selected points
+    const selectedXCoordinate = document.getElementById('x-coordinate');
+    const selectedYCoordinate = document.getElementById('y-coordinate');
+
+    // convert selected points from string to number
+    const xCoordinate = Number(selectedXCoordinate.options[selectedXCoordinate.selectedIndex].text);
+    const yCoordinate = Number(selectedYCoordinate.options[selectedYCoordinate.selectedIndex].text);
+
+
+    // add the point to the SVG
+    const circleElement = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circleElement.setAttribute('id', `(${xCoordinate}, ${yCoordinate})`)
+    circleElement.setAttribute('cx', X_SCALE(xCoordinate) + MARGINS.left);
+    circleElement.setAttribute('cy', Y_SCALE(yCoordinate) + MARGINS.top);
+    circleElement.setAttribute('r', 20);
+    circleElement.setAttribute('class', 'point');
+    circleElement.setAttribute('onclick', 'onPointClick(this)');
+
+    const frame = document.getElementById('frame');
+    frame.appendChild(circleElement);
 }
 
 buildScatterPlot()
