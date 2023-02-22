@@ -56,4 +56,7 @@ body {
     fill: rgb(11, 166, 255);
 }
 
-.tooltip {}
+.tooltip {
+    padding: 2rem;
+    border: 1px solid;
+}
