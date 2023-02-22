@@ -158,6 +158,23 @@ async function buildBarChart() {
         "," + MARGINS.left + ")")
         .call(d3.axisLeft(Y_SCALE).ticks(4));
 
+    // Define the div for the tooltip
+    const tooltip = d3.select("#vis2").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0)
+        .style("background", "gray");
+
+    function barChartMousemove(event, d) {
+        TOOLTIP.html("Item Category: " + d.category + "<br>" + "Category Amount: " + d.amount)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 50) + "px")
+    };
+
+    FRAME.selectAll(".bar")
+        .on("mouseover", (event, d) => tooltip.style('opacity', 1))
+        .on("mousemove", barChartMousemove)
+        .on("mouseleave", (event, d) => tooltip.style('opacity', 0));
+
 }
 
 buildScatterPlot()
